@@ -16,7 +16,7 @@
 
 package za.co.absa.spline.persistence.atlas.conversion
 
-import org.apache.atlas.typesystem.Referenceable
+import org.apache.atlas.v1.model.instance.Referenceable
 import za.co.absa.spline.model.DataLineage
 import za.co.absa.spline.persistence.atlas.model._
 

@@ -24,6 +24,7 @@ import org.apache.hadoop.conf.Configuration
 import org.apache.spark.sql.catalyst.expressions.SortOrder
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.execution.datasources.{DataSource, HadoopFsRelation, LogicalRelation}
+import org.apache.spark.sql.execution.command.CreateDataSourceTableAsSelectCommand
 import org.apache.spark.sql.execution.streaming.StreamingRelation
 import org.apache.spark.sql.sources.BaseRelation
 import org.apache.spark.sql.{JDBCRelation, SaveMode}
@@ -60,6 +61,7 @@ class OperationNodeBuilderFactory(implicit hadoopConfiguration: Configuration, m
     case s: Aggregate => new AggregateNodeBuilder(s)
     case a: SubqueryAlias => new AliasNodeBuilder(a)
     case lr: LogicalRelation => new ReadNodeBuilder(lr)
+    case ctas: CreateDataSourceTableAsSelectCommand => new CTASNodeBuilder(ctas)
     case wc if writeCommandParser.matches(logicalPlan) => new WriteNodeBuilder(writeCommandParser.asWriteCommand(wc))
     case x => new GenericNodeBuilder(x)
   }
@@ -325,4 +327,22 @@ private class UnionNodeBuilder(val operation: Union)
   def build(): op.Operation = op.Union(buildOperationProps())
 }
 
+/**
+  * The class represents a builder of operations nodes dedicated for Spark CreateTable operation.
+  *
+  * @param operation          An input Spark union operation
+  * @param metaDatasetFactory A factory of meta data sets
+  */
+private class CTASNodeBuilder(val operation: CreateDataSourceTableAsSelectCommand)
+                             (implicit val metaDatasetFactory: MetaDatasetFactory) extends OperationNodeBuilder[CreateDataSourceTableAsSelectCommand] {
+
+  override def build(): op.Operation = {
+    op.Write(
+      buildOperationProps(),
+      "Hive",
+      operation.table.identifier.identifier,
+      append = operation.mode == SaveMode.Append
+    )
+  }
+}
 

@@ -16,14 +16,7 @@
 
 package za.co.absa.spline.persistence.atlas
 
-import java.util.UUID.randomUUID
-
-import org.apache.atlas.typesystem.json.InstanceSerialization
 import org.scalatest.{FlatSpec, Matchers}
-import za.co.absa.spline.common.OptionImplicits._
-import za.co.absa.spline.model._
-import za.co.absa.spline.model.dt.Simple
-import za.co.absa.spline.persistence.atlas.conversion.DataLineageToTypeSystemConverter
 
 class DataLineageToTypeSystemMapperSpec extends FlatSpec with Matchers{
 /*

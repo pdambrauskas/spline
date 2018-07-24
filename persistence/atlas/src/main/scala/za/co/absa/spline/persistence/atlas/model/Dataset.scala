@@ -17,8 +17,9 @@
 package za.co.absa.spline.persistence.atlas.model
 
 import org.apache.atlas.AtlasClient
-import org.apache.atlas.typesystem.Referenceable
 import java.util.UUID
+
+import org.apache.atlas.v1.model.instance.Referenceable
 
 import scala.collection.JavaConverters._
 

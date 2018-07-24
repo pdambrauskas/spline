@@ -83,7 +83,8 @@
         <scala.version>2.11.12</scala.version>
         <scala.compat.version>2.11</scala.compat.version>
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4s.version>1.7.13</slf4s.version>
+        <slf4j.version>1.7.16</slf4j.version>
         <salat.version>1.11.2</salat.version>
         <!-- Don't upgrade json4s.version to newer version. An upgrade would cause binary incompatibility of json4s between Spark and Spline. -->
         <json4s.version>3.2.11</json4s.version>
@@ -311,6 +312,29 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>shade</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <shadedClassifierName>shaded</shadedClassifierName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencies>
@@ -407,7 +431,7 @@
             <dependency>
                 <groupId>org.slf4s</groupId>
                 <artifactId>slf4s-api_${scala.compat.version}</artifactId>
-                <version>${slf4j.version}</version>
+                <version>${slf4s.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

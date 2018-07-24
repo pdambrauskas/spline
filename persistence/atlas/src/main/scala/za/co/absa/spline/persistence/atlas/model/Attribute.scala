@@ -16,11 +16,8 @@
 
 package za.co.absa.spline.persistence.atlas.model
 
-import java.util.UUID
-
 import org.apache.atlas.AtlasClient
-import org.apache.atlas.typesystem.persistence.Id
-import org.apache.atlas.typesystem.{Referenceable, Struct}
+import org.apache.atlas.v1.model.instance.{Id, Referenceable}
 
 /**
   * The class represents at attribute of a Spark data set.

@@ -16,9 +16,6 @@
 
 package za.co.absa.spline.persistence.atlas.conversion
 
-import java.util.UUID
-
-import org.apache.atlas.typesystem.persistence.Id
 import za.co.absa.spline.model._
 import za.co.absa.spline.persistence.atlas.model._
 
